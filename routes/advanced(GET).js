@@ -16,8 +16,7 @@ module.exports = {
 		const { name } = request.query;
 
 		reply({
-      method: 'GET',
-      text: `Congrats ${name}, you've created your first service on servicesHub :)`
+      text: `Congrats ${name}, you've created your first service on servicesHub :)\nThis request was a GET`
     });
 	})
 };
