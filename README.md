@@ -31,6 +31,7 @@ curl -i -X POST \
 ```
 
 Notes:
+
 - replace number by an international number format, ie. 0033xxxxxxxxx for a french number.
 
 - french law disallow to send commercials SMS by night or during the week-end. If you are in France, you will receive SMS only during week's day.
