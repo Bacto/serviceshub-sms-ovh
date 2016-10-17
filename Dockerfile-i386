@@ -8,6 +8,6 @@ VOLUME [ "/datas" ]
 RUN ls -al /datas/
 WORKDIR /datas
 
-EXPOSE 9090
+EXPOSE 8080
 
 ENTRYPOINT npm start
