@@ -1,4 +1,4 @@
-# servicesHub - SMS through OVH
+# servicesHub - Handle SMS through OVH
 
 This is a micro service to send a SMS through OVH's API
 
