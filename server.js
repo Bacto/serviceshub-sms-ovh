@@ -6,46 +6,46 @@ import good from 'good';
 import suspend, { resume } from 'suspend';
 
 suspend(function*() {
-	const server = new Hapi.Server();
-	const port = 9090; // DO NOT CHANGE IT. If you want to change it, see README.md
+  const server = new Hapi.Server();
+  const port = 9090; // DO NOT CHANGE IT. If you want to change it, see README.md
 
-	server.connection({ port });
-
-
-	// Log to console in dev mode
-	if (process.env.NODE_ENV !== 'production') {
-		yield server.register({
-			register: good,
-			options: {
-				ops: false,
-				reporters: {
-					console: [ { module: 'good-console' }, 'stdout' ]
-				}
-			}
-		}, resume());
-	}
+  server.connection({ port });
 
 
-	// Load route
-	const routesFiles = yield nodeDir.files('routes/', resume());
-	for (const routeFile of routesFiles) {
-		const route = require('./' + routeFile);
+  // Log to console in dev mode
+  if (process.env.NODE_ENV !== 'production') {
+    yield server.register({
+      register: good,
+      options: {
+        ops: false,
+        reporters: {
+          console: [ { module: 'good-console' }, 'stdout' ]
+        }
+      }
+    }, resume());
+  }
 
-		const routePath = routeFile
-		.replace(/^routes/, '')
-		.replace(/\.js$/, '')
-		.replace(/\((?:GET|POST|PUT|PATCH|DELETE|OPTIONS|\*|\|)+\)$/, '')
-		.replace(/_default$/, '');
-		route.path = routePath;
 
-		const methodsString = routeFile.match(/\(((?:GET|POST|PUT|PATCH|DELETE|OPTIONS|\*|\|)+)\)\.js$/);
-		route.method = methodsString ? methodsString[1].split('|') : '*';
+  // Load route
+  const routesFiles = yield nodeDir.files('routes/', resume());
+  for (const routeFile of routesFiles) {
+    const route = require('./' + routeFile);
 
-		server.route(route);
-	}
+    const routePath = routeFile
+    .replace(/^routes/, '')
+    .replace(/\.js$/, '')
+    .replace(/\((?:GET|POST|PUT|PATCH|DELETE|OPTIONS|\*|\|)+\)$/, '')
+    .replace(/_default$/, '');
+    route.path = routePath;
 
-	// Start server
-	yield server.start(resume());
-	console.log('Server is running');
+    const methodsString = routeFile.match(/\(((?:GET|POST|PUT|PATCH|DELETE|OPTIONS|\*|\|)+)\)\.js$/);
+    route.method = methodsString ? methodsString[1].split('|') : '*';
+
+    server.route(route);
+  }
+
+  // Start server
+  yield server.start(resume());
+  console.log('Server is running');
 
 })();

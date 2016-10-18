@@ -25,13 +25,13 @@ curl -i -X POST \
   -d "appKey=..." \
   -d "appSecret=..." \
   -d "consumerKey=..." \
-  -d "number=..." \
+  -d "numbers=..." \
   -d "message=..." \
   "http://serviceshub1.bacto.net:9092/send"
 ```
 
 Notes:
 
-- replace number by an international number format, ie. 0033xxxxxxxxx for a french number.
+- numbers are international numbers format, ie. 0033xxxxxxxxx for a french number. You can add multiple numbers, separated by commas.
 
 - french law disallow to send commercials SMS by night or during the week-end. If you are in France, you will receive SMS only during week's day.
