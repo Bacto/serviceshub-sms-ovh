@@ -27,11 +27,14 @@ curl -i -X POST \
   -d "consumerKey=..." \
   -d "numbers=..." \
   -d "message=..." \
+  -d "async=[true|false]" \
   "http://serviceshub1.bacto.net:9092/send"
 ```
 
 Notes:
 
-- numbers are international numbers format, ie. 0033xxxxxxxxx for a french number. You can add multiple numbers, separated by commas.
+- Numbers are international numbers format, ie. 0033xxxxxxxxx for a french number. You can add multiple numbers, separated by commas.
 
-- french law disallow to send commercials SMS by night or during the week-end. If you are in France, you will receive SMS only during week's day.
+- French law disallow to send commercials SMS by night or during the week-end. If you are in France, you will receive SMS only during week's day.
+
+- If you set async to true, the micro service will not wait for SMS to be sent. It's fast but you will not notice if there is an error.

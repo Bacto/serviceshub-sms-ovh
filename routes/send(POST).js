@@ -12,13 +12,18 @@ module.exports = {
         appSecret: joi.string().alphanum().required(),
         consumerKey: joi.string().alphanum().required(),
         numbers: joi.string().regex(/^[0-9,]+$/).required(),
-        message: joi.string().required()
+        message: joi.string().required(),
+        async: joi.boolean()
       }
     }
   },
 
   handler: suspend(function*(request, reply) {
-    const { appKey, appSecret, consumerKey, numbers, message } = request.payload;
+    const { appKey, appSecret, consumerKey, numbers, message, async } = request.payload;
+
+    if (async) {
+      reply({ result: 'ok' });
+    }
 
     const ovh = Ovh({
       appKey,
@@ -36,6 +41,8 @@ module.exports = {
 
     const result = yield ovh.request('POST', '/sms/' + serviceName + '/jobs/', options, resume());
 
-    reply(result);
+    if (!async) {
+      reply(result);
+    }
   })
 };
